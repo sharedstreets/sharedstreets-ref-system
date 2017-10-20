@@ -5,7 +5,7 @@ SharedStreets is a framework for creating and exchanging street-linked data. Unl
 SharedStreets was originally created as part of the [OpenTraffc project](https://github.com/opentraffic/architecture/issues/1) as a non-propreitary system for sharing street-linked data. It builds on the core concepts from [OpenLR](http://www.openlr.info/) and provides a set of data formats and open source tools to re-imagine collaboration and sharing of geospaital data.
 
 ### Example Applications
-**Traffic data:** SharedStreets references are used to share base map-independent descriptions of traffic conditions. In the OpenTraffic project fleet operators convert GPS data to to traffic observations (speeds along OpenStreetMap defined roadway segments). Traffic observations are shared externally using SharedStreets references to describe street segments.
+**Traffic data:** SharedStreets references are used to share basemap-independent descriptions of traffic conditions. In the OpenTraffic project fleet operators convert GPS data to to traffic observations (speeds along OpenStreetMap defined roadway segments). Traffic observations are shared externally using SharedStreets references to describe street segments.
 
 **Street and curb inventory:** Cities produce detailed curb inventories (e.g. parking regulations and physical assets) using internally managed linear referencing systems (LRS), or latitude/longitude coordinates not linked with streets. Internal LRS data can be translated to SharedStreets references to allow interoperability with other city or external data sets.
 
@@ -20,7 +20,7 @@ The SharedStreets Referencing system generates four layers of data:
 4. **OSM Metadata:** underlying OSM way and node references used to construct SharedStreets data
 
 ### Stable, non-proprietary shorthand IDs
-SharedStreets uses 128-bit shorthand indentifiers to relate data within the SharedStreets referencing system. These IDs provide a basemap-indpendent system for linking to street segment references, intersections and geometries. **These indentifiers are generated deterministically using a hash of the underlying data.** This means that two different users with the same input data can generate matching SharedStreets indentifiers. This simplifies data sharing, allowing users to match data using shorthand IDs whenever possible.
+SharedStreets uses 128-bit shorthand identifiers to relate data within the SharedStreets referencing system. These IDs provide a basemap-independent system for linking to street segment references, intersections and geometries. **These identifiers are generated deterministically using a hash of the underlying data.** This means that two different users with the same input data can generate matching SharedStreets identifiers. This simplifies data sharing, allowing users to match data using shorthand IDs whenever possible.
 
 ### Generating references + data tiles
 SharedStreets street and intersection references can be pre-generated from OSM data using the [SharedStreets Builder](https://github.com/sharedstreets/sharedstreets-builder) application. This allows anyone to rapidly match their data against existing segement references. 
@@ -38,7 +38,7 @@ Building on the OpenLR location referencing system, SharedStreets references pro
 - Each SSR describes a directional street segment, between corresponding intersections. Two-way streets are described using two SSRs, one in each direction, while a one-way street only has one SSR.
 - For long segments LRs are repeated every 15km, segments shorter than 15km have only a beginning and end LR. 
 - LRs describe the compass bearing of the street geometry immediately following the the LR. The final LR of a SSR does not provide a bearing. 
-- An initial set of SSRs are built using OpenStreetMap (OSM) data, however, in the future SharedStreets users will be able to publiclly register SSRs for streets not found in OSM. These could include data found in commercial or government maintained basemaps. Users do not have to share the underlying data, only the SSR descriptor. 
+- An initial set of SSRs are built using OpenStreetMap (OSM) data, however, in the future SharedStreets users will be able to publicly register SSRs for streets not found in OSM. These could include data found in commercial or government maintained basemaps. Users do not have to share the underlying data, only the SSR descriptor. 
 
 
 ```javascript
