@@ -2,12 +2,43 @@
 
 SharedStreets is a framework for creating and exchanging street-linked data. Unlike GIS-based methods for data exchange that depend on geometry or predefined, proprietary identifiers to describe streets, the SharedStreets Referencing system uses topology, and other descriptive properties to define street locations. SharedStreets references allow users to share street-linked data without sharing underlying map data, or require that users agree on a common base map.
 
+SharedStreets was originally created as part of the [OpenTraffc project](https://github.com/opentraffic/architecture/issues/1) as a non-propreitary system for sharing street-linked data. It builds on the core concepts from [OpenLR](http://www.openlr.info/) and provides a set of data formats and open source tools to re-imagine collaboration and sharing of geospaital data.
+
+### Example Applications
 **Traffic data:** SharedStreets references are used to share base map-independent descriptions of traffic conditions. In the OpenTraffic project fleet operators convert GPS data to to traffic observations (speeds along OpenStreetMap defined roadway segments). Traffic observations are shared externally using SharedStreets references to describe street segments.
 
 **Street and curb inventory:** Cities produce detailed curb inventories (e.g. parking regulations and physical assets) using internally managed linear referencing systems (LRS), or latitude/longitude coordinates not linked with streets. Internal LRS data can be translated to SharedStreets references to allow interoperability with other city or external data sets.
 
 **Incident/road closure reporting:** transport authorities share data about street conditions in real-time with consumer applications. SharedStreets references can be used to streamline reporting procedures by providing a shared, non-proprietary format for describing roadway incidents and closure events.
 
+## DRAFT SharedStreets Referencing System
+
+The SharedStreets Referencing system generates four layers of data:
+1. **SharedStreets References:** basemap-independent references to steet segments
+2. **SharedStreets Intersection:** nodes connecting street steet segments references
+3. **SharedStreets Geometries:** geometries related to street segment references
+4. **OSM Metadata:** underlying OSM way and node references used to construct SharedStreets data
+
+### Stable, non-proprietary shorthand IDs
+SharedStreets uses 128-bit shorthand indentifiers to relate data within the SharedStreets referencing system. These IDs provide a basemap-indpendent system for linking to street segment references, intersections and geometries. **These indentifiers are generated deterministically using a hash of the underlying data.** This means that two different users with the same input data can generate matching SharedStreets indentifiers. This simplifies data sharing, allowing users to match data using shorthand IDs whenever possible.
+
+### Generating references + data tiles
+SharedStreets street and intersection references can be pre-generated from OSM data using the [SharedStreets Builder](https://github.com/sharedstreets/sharedstreets-builder) application. This allows anyone to rapidly match their data against existing segement references. 
+
+As part of the DRAFT release pre-generated SharedStreets tiles for New York City are included in this repository. Users can generate their own tiles for any abetrary OSM data set using the Builder applicatoin. Once the data specification is finalized a SharedStreets will generate and maintain a global data tile set. 
+
+The DRAFT release of SharedStreets uses JSON files, cut into mercator tiles at zoom level 10. These DRAFT tiles are verbose -- they are designed to  
+
+### BYOM 
+SharedStreets is based on the idea that users can/should maintain their own internal basemaps. Any basemap--open or proprietary--can generate SharedStreets references that can be shared with others using a different map. With open base maps users are encouraged to share the full set of SharedStreets data layers (references, geometries and metadata).
+
+### SharedStreets References
+Building on the OpenLR location referencing system, SharedStreets references provide a global, basemap-independent system for describing streets. Each SharedStreets Reference (SSR) consists of two or more location references (LRs) that describe the latitude and longitude of the beginning or end of a street segment. SSRs also describe type of road, and length of the geometry connecting terminal points. In combination these attributes uniquely describe any road segment, and can be used to look up corresponding streets in users’ internal maps.
+
+- Each SSR describes a directional street segment, between corresponding intersections. Two-way streets are described using two SSRs, one in each direction, while a one-way street only has one SSR.
+- For long segments LRs are repeated every 15km, segments shorter than 15km have only a beginning and end LR. 
+- LRs describe the compass bearing of the street geometry immediately following the the LR. The final LR of a SSR does not provide a bearing. 
+- An initial set of SSRs are built using OpenStreetMap (OSM) data, however, in the future SharedStreets users will be able to publiclly register SSRs for streets not found in OSM. These could include data found in commercial or government maintained basemaps. Users do not have to share the underlying data, only the SSR descriptor. 
 
 
 ```javascript
@@ -48,6 +79,7 @@ SharedStreets is a framework for creating and exchanging street-linked data. Unl
 }
 ```
 
+### SharedStreets Intersections
 ```javascript
 {
 	"type": "Feature",
@@ -81,6 +113,7 @@ SharedStreets is a framework for creating and exchanging street-linked data. Unl
 ```
 
 
+### SharedStreets Geometries
 ```javascript
 {
 	"type": "Feature",
@@ -103,6 +136,7 @@ SharedStreets is a framework for creating and exchanging street-linked data. Unl
 ```
 
 
+### SharedStreets OSM Metadata
 ```javascript
 {
 	"geometryId": "GujiXxsS7m3aAXgjkQLjtc",
@@ -116,3 +150,43 @@ SharedStreets is a framework for creating and exchanging street-linked data. Unl
 	}]
 }
 ```
+
+
+### Frequently Asked Questions
+
+**How does this relate to OpenStreetMap? (Aka doesn't OSM already do this?)**
+
+SharedStreets is complementary to OSM. OSM does not attempt to provide stable IDs, and complex OSM ways make many application challenging to build using raw OSM data. 
+
+SharedStreets provides a layer of abstraction on top of OSM, allowing users to work with the *topolgy* of OpenStreetMaps data without dealing with the details how OSM ways are encoded. 
+
+By providing direct references to OSM way and node IDs users can always query and relate the underlying OSM data in cases where needed.
+
+
+**How does SharedStreets relate to OSMLR v1.0?**
+
+OSMLR v1.0 was developed by Mapzen to support OpenTraffic, under contract from the World Bank. SharedStreets is effectively OSMLR v2.0, but drops the OSMLR name as it intends to support broad range of map data formats inclduing but not limited to OSM. 
+
+SharedStreets also attempts to address two serious problems in the v1 implementation:
+
+**The OSMLR 1.0 implemtation splits street segments into 1km sections.** This design conflated location refencing (the identification of street segments) with linear reference (the identifcation of locations along segments). 
+
+As segment geometries change due to improved mapping the length of segments varies -- sometimes substantially. For longer semgents this could create or destroy OSMLR refernces (e.g. a 10km stretch of road becoms 12km when the map is improved, resulting in two new OSMLR 1km segements). This undermines one the of the core ideas of OpenLR: underlying map data can change while  segment references remain stable.
+
+This problem is especially serious in devleoping countries where the quality of maps are rapidly improving. It also creates problems sharing data between users with different quality basemaps -- users with more precise maps will in most cases have longer map segments, resulting in new OSMLR segments that cannot be generated by users with coarser maps.
+
+Pre-spliting segments into 1km sections also undermines applications that describe locations along segments (e.g curbside parking regulations). Pre-spliting streets into 1km OSMLR chunks creates challenges for encoding features that span longer sections of road.  Given the geomerty changes may move (or even create or destroy) segment reference, precise linear refernecing is not possible using OSMLR v1.0.
+
+SharedStreets addresses this problem by decoupling location refencing and linear reference. All streets segments are mapped at intersection to intersection. Users with different quality maps should be able to overcome variations in geometry length by using other propereties of the reference (segment end points, bearing and "form of way"). SharedStreets provides a separate linear referencing format to describe points or sections of the segment. 
+
+**2) The OSMLR 1.0 implementation depends on Valhalla, an open source routing engine developed by Mapzen, to generate segment IDs.** These IDs are non-determinsitic and cannot be easily generated by users without deploying the Vahalla system. This creates a dependency on a specifc piece of software, likely reducing the uptake and portabiltiy of OSMLR segments by non-Valhalla users.
+
+SharedStreets addresses this by creating a deterministic, software-independent process for generating shorthand IDs. SharesStreets provides open source software as a reference, but the methods can be easily incorporated into other software to independently generate matching IDs.
+
+
+The above issues noted, OSMLR v1.0 is "forward-compatable" with SharedStreets. OSMLR segements can be mapped to SharedStreets segments when needed. SharedStreets segments cannot be accurately described using OSMLR v1.0 due to limitations of the OSMLR spec. 
+
+
+
+
+
