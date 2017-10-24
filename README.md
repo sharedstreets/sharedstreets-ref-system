@@ -33,11 +33,11 @@ The SharedStreets Referencing system is built on four layers of data:
 
 The OpenLR-style street segment references are the foundation of the SharedStreets Referencing System. These references allow users to uniquely describe any street segment in the world using just a few high-level characteristics of the road. This allows users with different map geometries to describe the same street segments in identical or nearly identical terms. This protects users' intellectual property and enables rapid reconciliation of street segments derived from different maps.
 
-### Stable, non-proprietary shorthand IDs
-SharedStreets uses 128-bit shorthand identifiers to relate data within the SharedStreets referencing system. These IDs provide a basemap-independent addressing system for street segment references, intersections and geometries. **These identifiers are generated deterministically using a hash of the underlying data.** This means that two different users with the same input data can generate matching SharedStreets identifiers. This simplifies data sharing, allowing users to match data using shorthand IDs whenever possible.
- 
 ### BYOM 
 SharedStreets is based on the idea that users will maintain their own internal basemaps. Any basemap--open or proprietary--can generate SharedStreets references for sharing with others using a different map. With open basemap data users are encouraged to share the full set of SharedStreets data layers (references, geometries and metadata). Users with proprietary basemap data can share only the segment references, allowing exchange of information while protecting map street geometries and other intellectual property.
+
+### Stable, non-proprietary shorthand IDs
+SharedStreets uses 128-bit shorthand identifiers to relate data within the SharedStreets referencing system. These IDs provide a basemap-independent addressing system for street segment references, intersections and geometries. **These identifiers are generated deterministically using a hash of the underlying data.** This means that two different users with the same input data can generate matching SharedStreets identifiers. This simplifies data sharing, allowing users to match data using shorthand IDs whenever possible.
 
 ### Generating references + data tiles
 SharedStreets street references, intersections and geometries can be generated from OSM data using the [SharedStreets Builder](https://github.com/sharedstreets/sharedstreets-builder) application. 
@@ -213,8 +213,7 @@ SharedStreets addresses this problem by decoupling location referencing and line
 
 **2) The OSMLR 1.0 implementation depends on Valhalla, an open source routing engine developed by Mapzen, to generate segment IDs.** These IDs cannot be generated without deploying the Valhalla system. This creates a dependency on a specific piece of software, likely reducing the uptake and portability of OSMLR spec by non-Valhalla users.
 
-SharedStreets addresses this by creating a deterministic, software-independent process for generating shorthand IDs. SharesStreets provides open source software as a reference, but the methods can be easily incorporated into other software to independently generate matching IDs.
-
+SharedStreets addresses this by creating a deterministic, software-independent process for generating shorthand IDs. SharedStreets provides open source software as a reference, but the methods can be easily incorporated into other applications to independently generate matching IDs.
 
 The above issues noted, OSMLR v1.0 can be mapped to SharedStreets segments when needed. SharedStreets segments cannot be accurately described using OSMLR v1.0 due to limitations of the OSMLR spec. 
 
