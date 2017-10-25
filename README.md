@@ -51,6 +51,8 @@ SharedStreets is based on the idea that users will maintain their own internal b
 ### Stable, non-proprietary shorthand IDs
 SharedStreets uses 128-bit shorthand identifiers to relate data within the SharedStreets referencing system. These IDs provide a basemap-independent addressing system for street segment references, intersections and geometries. **These identifiers are generated deterministically using a hash of the underlying data.** This means that two different users with the same input data can generate matching SharedStreets identifiers. This simplifies data sharing, allowing users to match data using shorthand IDs whenever possible.
 
+In the draft specification the 128-bit IDs are encoded as base-58 strings. 
+
 ### Generating references + data tiles
 SharedStreets street references, intersections and geometries can be generated from OSM data using the [SharedStreets Builder](https://github.com/sharedstreets/sharedstreets-builder) application. 
 
@@ -107,8 +109,7 @@ The DRAFT release of SharedStreets uses JSON files, cut into mercator tiles at z
 ![GIS vs SharedStreets data exchange](img/sharedstreets_references.png)
 
 
-
-SharedStreets References (SSR) are directional edges in a road network. Two-way streets have two SSRs, one for each direction of travel, while a one-way street only has one SSR. In the draft specification these are label "forward references" and "back references," with the forward reference following the direction of the map geometry used to create the reference.
+SharedStreets References (SSR) are directional edges in a road network. Two-way streets have two SSRs, one for each direction of travel, while one-way streets only have one SSR. In the draft specification these are labeled "forward references" and "back references," with the forward reference following the direction of the map geometry used to generate the references.
 
 Each SharedStreets Reference consists of two or more location references (LRs) that describe the latitude and longitude of the beginning or end of a street segment. SSRs also describe type of road (or the "form of way," as defined by OpenLR), and length of the geometry connecting location reference points. In combination these attributes uniquely describe any road segment, and can be used to look up corresponding streets in users’ internal maps.
 
