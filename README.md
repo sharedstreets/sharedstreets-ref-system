@@ -3,11 +3,11 @@
 ## Introduction
 
 
-SharedStreets data standards are a way to uniquely identify any street in world. SharedStreets makes maps connectable, and allows quick porting of data between different street representations, whether data linked to OpenStreetMap, or propreitary internal GIS or commerical basemaps.
+SharedStreets data standards are a way to uniquely identify any street in world. SharedStreets makes maps connectable, and allows quick porting of data between different street representations, whether data linked to OpenStreetMap, a city-managed GIS system, or a commerical basemap.
 
 Cities today depend on geographic information systems (GIS) to collect and share street data, but this process requires users to agree on a map, or to use predefined, and often proprietary IDs to describe streets.
 
-This limits the potential for collaboration and data sharing between government agencies and with the private sector. And use of proprietary maps and identification systems can undermine cities’ ability to use and share critical information about public streets.
+This limits the potential for collaboration and data sharing between government agencies, and with the private sector. And use of proprietary maps and identification systems can undermine cities’ ability to use and share critical public information about streets.
 
 SharedStreets provides a global, non-proprietary system for describing streets, designed to incorporate any source of street-linked data. This allows public and private entities to communicate with clarity and precision about streets while ensuring full compatibility with organizations’ internal map data.
 
@@ -63,7 +63,7 @@ Once the data specification is finalized the SharedStreets program will generate
 The DRAFT release of SharedStreets exports data as JSON files, cut into mercator tiles at zoom level 10. These DRAFT tiles are verbose and are designed to support exploration and refinement of the specification. Once the specificatio is finalized SharedStreets will provide JSON and Protocol Buffer tile formats. SharedStreets is also exploring use of "lossy" vector tile formats for distribution of data for web visualization. 
 
 
-## DRAFT Data Formats
+## DRAFT ShareStreets Data Formats
 
 
 
@@ -237,9 +237,9 @@ We believe that SharedStreets will allow users to more rapidly improve OpenStree
 
 #### How does SharedStreets relate to OSMLR v1.x?
 
-OSMLR v1.x was developed to support OpenTraffic under contract from the World Bank. SharedStreets is effectively "OSMLR v2.0" but drops the OSMLR name as it intends to support broad range of map data formats including, but not limited to, SM.
+OSMLR v1.x was developed to support OpenTraffic under contract from the World Bank. SharedStreets is the continuation of this work as part of the Open Transport Parntership. The SharedStreets Referencing system is effectively "OSMLR v2.0" but drops the OSMLR name as it intends to support broad range of map data formats including, but not limited to, OpenStreetMap.
 
-SharedStreets also addresses two problems in the OSMLR v1.0 implementation:
+SharedStreets also addresses two problems in the OSMLR v1.x implementation:
 
 **1) OSMLR v1.x segment references over 1km in length are unstable.**
 
