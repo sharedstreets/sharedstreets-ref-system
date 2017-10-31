@@ -267,4 +267,3 @@ The above issues noted, OSMLR v1.x can be mapped to SharedStreets segments when 
 
 
 
-
