@@ -56,7 +56,7 @@ In the draft specification the 128-bit IDs are encoded as base-58 strings.
 ### Generating references + data tiles
 SharedStreets street references, intersections and geometries can be generated from OSM data using the [SharedStreets Builder](https://github.com/sharedstreets/sharedstreets-builder) application. 
 
-As part of the DRAFT release pre-generated a sample of SharedStreets tiles for New York City are included in this repository. A zip archive of the full NYC tile set can be [downloaded here](https://www.dropbox.com/s/2hg51ha1l2az27e/nyc_metro_sample.zip?dl=0) (146MB file). Users can generate their own tiles for any arbitrary OSM data set using the SharedStreets Builder application. 
+As part of the DRAFT release pre-generated a sample of SharedStreets tiles for New York City are included in this repository. A zip archive of the full NYC tile set can be [downloaded here](https://www.dropbox.com/s/ys1wb25aipmkbi2/nyc_sample_data.zip?dl=0) (146MB file). Users can generate their own tiles for any arbitrary OSM data set using the SharedStreets Builder application. 
 
 Once the data specification is finalized the SharedStreets program will generate and maintain a global data tile set, and provide tools to cities for reconciling their data with the referencing system. 
 
@@ -165,6 +165,14 @@ Each SharedStreets Reference consists of two or more location references (LRs) t
 
 
 ### SharedStreets Geometries
+
+![GIS vs SharedStreets Geometries](img/sharedstreets_geometries.png)
+
+
+SharedStreets Geometries are street centerline data derived from the basemap used to produce SharedStreets References. A single geometry is shared by each set of forward and back references.
+
+SharedStreets is premised on the idea that there's no one correct geometry for a given street. Just as street refereneces can be generated from any basemap, street geometries can be derived from any data source. 
+
 ```javascript
 {
 	"type": "Feature",
@@ -190,6 +198,9 @@ Each SharedStreets Reference consists of two or more location references (LRs) t
 
 
 ### SharedStreets OSM Metadata
+
+SharedStreets generates metadata about the map data used to generate references and geometries. For OSM-derived references the way and nodes are stored as part of metadata layer. This simplifies matching references back to underlying basemap data, and provides a framework to easily track changes in the underlying basemap data.
+
 ```javascript
 {
 	"geometryId": "NxPFkg4CrzHeFhwV7Uiq7K",
@@ -214,7 +225,7 @@ Each SharedStreets Reference consists of two or more location references (LRs) t
 
 ### Frequently Asked Questions
 
-**How does this relate to OpenStreetMap? (Aka doesn't OSM already do this?)**
+#### How does this relate to OpenStreetMap? (Or, doesn't OSM already do this?)**
 
 SharedStreets complements OpenStreetMap. OSM does not attempt to provide stable IDs, and complex OSM ways make many application challenging to build using raw OSM data. 
 
@@ -224,32 +235,34 @@ By providing direct references to OSM way and node IDs users can always query an
 
 We believe that SharedStreets will allow users to more rapidly improve OpenStreetMap data by making it easier to identify missing streets, or opportunities to improve street geometries.  
 
+#### How does SharedStreets relate to OSMLR v1.x?
 
-**How does SharedStreets relate to OSMLR v1.x?**
-
-OSMLR v1.x was developed to support OpenTraffic under contract from the World Bank. SharedStreets is effectively "OSMLR v2.0" but drops the OSMLR name as it intends to support broad range of map data formats including, but not limited to, SM. 
+OSMLR v1.x was developed to support OpenTraffic under contract from the World Bank. SharedStreets is effectively "OSMLR v2.0" but drops the OSMLR name as it intends to support broad range of map data formats including, but not limited to, SM.
 
 SharedStreets also addresses two problems in the OSMLR v1.0 implementation:
 
-**As designed OSMLR v1.x segment identifiers over 1km are unstable.**
+**1) OSMLR v1.x segment references over 1km in length are unstable.**
 
-The OSMLR v1.x implementation splits street segments into 1km sections. This design conflates location referencing (the identification of street segments) with linear reference (the identification of locations along segments). 
+The OSMLR v1.x implementation splits street segments into 1km sections. This design conflates location referencing (the identification of street segments) with linear reference (the identification of locations along segments).
 
-As segment geometries change due to improved mapping the length of segments varies -- sometimes substantially. For longer segments this could create or destroy OSMLR references (e.g. a 10km stretch of road becomes 12km when the map is improved, resulting in two new OSMLR 1km segments). This undermines one the of the core ideas of OpenLR: underlying map geometries can change while  segment references remain stable.
+As segment geometries change due to improved mapping, the length of segments changes, sometimes substantially. For longer segments this could create or destroy OSMLR references (e.g. a 10km stretch of road becomes 12km when the map is improved, resulting in two new OSMLR 1km segments). This undermines one the of the core ideas of OpenLR: underlying map geometries can change while segment references remain stable.
 
-This problem is especially serious in developing countries where the quality of maps are rapidly improving. It also creates problems sharing data between users with different quality basemaps. Users with more precise maps will in most cases have longer map segments, resulting in new OSMLR segments that cannot be generated by users with coarser maps.
 
-Pre-spliting segments into 1km sections also undermines applications that describe locations along segments (e.g curbside parking regulations). Pre-spliting streets into 1km OSMLR chunks creates challenges for encoding features that span longer sections of road.  Given the geometry changes may move (or even create or destroy) segment reference, precise linear referencing is not possible using OSMLR v1.x.
+![GIS vs SharedStreets Geometries](img/sharedstreets_osmlr_stability.png)
 
-SharedStreets addresses this problem by decoupling location referencing and linear reference. All streets segments are mapped at intersection to intersection. Users with different quality maps should be able to overcome variations in geometry length by using other properties of the reference (segment end points, bearing and "form of way"). SharedStreets provides a separate linear referencing format to describe points or sections of the segment. 
+This problem is especially serious in developing countries where the quality of maps are rapidly improving. It also creates problems sharing data between users with different quality basemaps. Users with more precise maps will in most cases have longer street segments, resulting in new OSMLR segments that cannot be generated by users with coarser maps.
 
-**2) OSMLR shorthand IDs can't be repoduced without use of specialized softwware. This undermines OSMLR's value as a universal, non-proprietary standard.** 
+Pre-spliting segments into 1km sections also undermines applications that describe locations along segments (e.g curbside parking regulations) or features that span longer sections of road. Given the geometry changes may move (or even create or destroy) segment references, precise/stable linear referencing is not possible using OSMLR v1.x.
 
-The OSMLR 1.x implementation depends on Valhalla, an open source routing engine developed by Mapzen, to generate segment IDs. These IDs cannot be generated without deploying the Valhalla system. This creates a dependency on a specific piece of software, likely reducing the uptake and portability of OSMLR spec by non-Valhalla users.
+SharedStreets addresses this problem by decoupling location referencing and linear reference. All streets segments are mapped at intersection to intersection. Users with different quality maps should be able to overcome variations in geometry length by using other properties of the reference (segment end points, bearing, and "form of way") to match segements. SharedStreets provides a separate linear referencing format to describe points or sections of the segment.
+
+**2) OSMLR shorthand IDs can't be repoduced without use of specialized softwware. This undermines OSMLR's value as a universal, non-proprietary standard.**
+
+The OSMLR 1.x implementation depends on Valhalla routing enginge to generate segment IDs. These IDs cannot be generated without deploying the Valhalla system. This creates a dependency on a specific piece of software, likely reducing the value of the OSMLR spec by non-Valhalla users.
 
 SharedStreets addresses this by creating a deterministic, software-independent process for generating shorthand IDs. SharedStreets provides open source software as a reference, but the methods can be easily incorporated into other applications to independently generate matching IDs.
 
-The above issues noted, OSMLR v1.x can be mapped to SharedStreets segments when needed. SharedStreets segments cannot be accurately described using OSMLR v1.x due to limitations of the OSMLR v1.x spec. 
+The above issues noted, OSMLR v1.x can be mapped to SharedStreets segments when needed. SharedStreets segments cannot be accurately described using OSMLR v1.x due to limitations of the OSMLR v1.x spec.
 
 
 
