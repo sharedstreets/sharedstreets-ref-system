@@ -227,13 +227,13 @@ SharedStreets generates metadata about the map data used to generate references 
 
 #### How does this relate to OpenStreetMap? (Or, doesn't OSM already do this?)**
 
-SharedStreets complements OpenStreetMap. OSM does not attempt to provide stable IDs, and complex OSM ways make many application challenging to build using raw OSM data. 
+SharedStreets complements OpenStreetMap. OSM does not attempt to provide stable IDs, and complex OSM ways make many applications difficult to build using raw OSM data. 
 
 SharedStreets provides a layer of abstraction on top of OSM, allowing users to work with the *topology* of OpenStreetMaps data without dealing with the details how OSM ways are encoded. 
 
-By providing direct references to OSM way and node IDs users can always query and relate the underlying OSM data in cases where needed. 
+By providing direct references to OSM way and node IDs users can always query and relate SharedStreets references back to the underlying OSM data where needed. 
 
-We believe that SharedStreets will allow users to more rapidly improve OpenStreetMap data by making it easier to identify missing streets, or opportunities to improve street geometries.  
+We believe that SharedStreets will allow users to more rapidly improve OpenStreetMap data by making it easier to identify missing streets, or opportunities to improve street geometry and connectivity.  
 
 #### How does SharedStreets relate to OSMLR v1.x?
 
