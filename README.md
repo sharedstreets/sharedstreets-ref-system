@@ -17,7 +17,7 @@ SharedStreets provides a global, non-proprietary system for describing streets, 
 
 The SharedStreets referencing system was originally created as part of the [OpenTraffc project](https://github.com/opentraffic/architecture/issues/1), as a mechanism for sharing dynamic traffic information. SharedStreets builds on the core concepts from [OpenLR](http://www.openlr.info/) and provides a collection of data formats and open source tools to re-imagine collaboration and sharing of street-linked data.
  
-The SharedStreets referencing system is being released as a DRAFT proposal, along with data samples and tools for generating references from OpenStreetMap and Shapefile data sources. Comments and suggestions on the format will be managed via this Github repository. Please open an Github issue or pull request to contribute. 
+The SharedStreets referencing system is being released as a draft proposal, along with data samples and tools for generating references from OpenStreetMap and Shapefile data sources. Comments and suggestions on the format will be managed via this Github repository. Please open an Github issue or pull request to contribute. 
 
 **A production version of the SharedStreets Referencing System and a global data set will be released soon. During the preview phase, referencing data can be generated using open source tools for any location.** 
 
@@ -56,11 +56,11 @@ In the draft specification the 128-bit IDs are encoded as base-58 strings.
 ### Generating references + data tiles
 SharedStreets street references, intersections and geometries can be generated from OSM data using the [SharedStreets Builder](https://github.com/sharedstreets/sharedstreets-builder) application. 
 
-As part of the DRAFT release pre-generated a sample of SharedStreets tiles for New York City are included in this repository. A zip archive of the full NYC tile set can be [downloaded here](https://www.dropbox.com/s/ys1wb25aipmkbi2/nyc_sample_data.zip?dl=0) (146MB file). Users can generate their own tiles for any arbitrary OSM data set using the SharedStreets Builder application. 
+As part of the draft release pre-generated a sample of SharedStreets tiles for New York City are included in this repository. A zip archive of the full NYC tile set can be [downloaded here](https://www.dropbox.com/s/ys1wb25aipmkbi2/nyc_sample_data.zip?dl=0) (146MB file). Users can generate their own tiles for any arbitrary OSM data set using the SharedStreets Builder application. 
 
 Once the data specification is finalized the SharedStreets program will generate and maintain a global data tile set, and provide tools to cities for reconciling their data with the referencing system. 
 
-The DRAFT release of SharedStreets exports data as JSON files, cut into mercator tiles at zoom level 10. These DRAFT tiles are verbose and are designed to support exploration and refinement of the specification. Once the specification is finalized SharedStreets will provide JSON and Protocol Buffer tile formats. SharedStreets is also exploring use of "lossy" vector tile formats for distribution of data for web visualization. 
+The draft release of SharedStreets exports data as JSON files, cut into mercator tiles at zoom level 10. These draft tiles are verbose and are designed to support exploration and refinement of the specification. Once the specification is finalized SharedStreets will provide JSON and Protocol Buffer tile formats. SharedStreets is also exploring use of "lossy" vector tile formats for distribution of data for web visualization. 
 
 
 ## DRAFT ShareStreets Data Formats
