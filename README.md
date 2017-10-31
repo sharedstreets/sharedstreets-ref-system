@@ -3,7 +3,7 @@
 ## Introduction
 
 
-SharedStreets data standards are a way to uniquely identify any street in world. SharedStreets makes maps connectable, and allows quick porting of data between different street representations, whether data linked to OpenStreetMap, a city-managed GIS system, or a commerical basemap.
+SharedStreets data standards are a way to uniquely identify any street in world. SharedStreets makes maps connectable, and allows quick porting of data between different street representations, whether data linked to OpenStreetMap, a city-managed GIS system, or a commercial basemap.
 
 Cities today depend on geographic information systems (GIS) to collect and share street data, but this process requires users to agree on a map, or to use predefined, and often proprietary IDs to describe streets.
 
@@ -60,7 +60,7 @@ As part of the DRAFT release pre-generated a sample of SharedStreets tiles for N
 
 Once the data specification is finalized the SharedStreets program will generate and maintain a global data tile set, and provide tools to cities for reconciling their data with the referencing system. 
 
-The DRAFT release of SharedStreets exports data as JSON files, cut into mercator tiles at zoom level 10. These DRAFT tiles are verbose and are designed to support exploration and refinement of the specification. Once the specificatio is finalized SharedStreets will provide JSON and Protocol Buffer tile formats. SharedStreets is also exploring use of "lossy" vector tile formats for distribution of data for web visualization. 
+The DRAFT release of SharedStreets exports data as JSON files, cut into mercator tiles at zoom level 10. These DRAFT tiles are verbose and are designed to support exploration and refinement of the specification. Once the specification is finalized SharedStreets will provide JSON and Protocol Buffer tile formats. SharedStreets is also exploring use of "lossy" vector tile formats for distribution of data for web visualization. 
 
 
 ## DRAFT ShareStreets Data Formats
@@ -171,7 +171,7 @@ Each SharedStreets Reference consists of two or more location references (LRs) t
 
 SharedStreets Geometries are street centerline data derived from the basemap used to produce SharedStreets References. A single geometry is shared by each set of forward and back references.
 
-SharedStreets is premised on the idea that there's no one correct geometry for a given street. Just as street refereneces can be generated from any basemap, street geometries can be derived from any data source. 
+SharedStreets is premised on the idea that there's no one correct geometry for a given street. Just as street references can be generated from any basemap, street geometries can be derived from any data source. 
 
 ```javascript
 {
@@ -237,7 +237,7 @@ We believe that SharedStreets will allow users to more rapidly improve OpenStree
 
 #### How does SharedStreets relate to OSMLR v1.x?
 
-OSMLR v1.x was developed to support OpenTraffic under contract from the World Bank. SharedStreets is the continuation of this work as part of the Open Transport Parntership. The SharedStreets Referencing system is effectively "OSMLR v2.0" but drops the OSMLR name as it intends to support broad range of map data formats including, but not limited to, OpenStreetMap.
+OSMLR v1.x was developed to support OpenTraffic under contract from the World Bank. SharedStreets is the continuation of this work as part of the Open Transport Partnership. The SharedStreets Referencing system is effectively "OSMLR v2.0" but drops the OSMLR name as it intends to support broad range of map data formats including, but not limited to, OpenStreetMap.
 
 SharedStreets also addresses two problems in the OSMLR v1.x implementation:
 
@@ -254,11 +254,11 @@ This problem is especially serious in developing countries where the quality of 
 
 Pre-spliting segments into 1km sections also undermines applications that describe locations along segments (e.g curbside parking regulations) or features that span longer sections of road. Given the geometry changes may move (or even create or destroy) segment references, precise/stable linear referencing is not possible using OSMLR v1.x.
 
-SharedStreets addresses this problem by decoupling location referencing and linear reference. All streets segments are mapped at intersection to intersection. Users with different quality maps should be able to overcome variations in geometry length by using other properties of the reference (segment end points, bearing, and "form of way") to match segements. SharedStreets provides a separate linear referencing format to describe points or sections of the segment.
+SharedStreets addresses this problem by decoupling location referencing and linear reference. All streets segments are mapped at intersection to intersection. Users with different quality maps should be able to overcome variations in geometry length by using other properties of the reference (segment end points, bearing, and "form of way") to match segments. SharedStreets provides a separate linear referencing format to describe points or sections of the segment.
 
-**2) OSMLR shorthand IDs can't be repoduced without use of specialized softwware. This undermines OSMLR's value as a universal, non-proprietary standard.**
+**2) OSMLR shorthand IDs can't be reproduced without use of specialized software. This undermines OSMLR's value as a universal, non-proprietary standard.**
 
-The OSMLR 1.x implementation depends on Valhalla routing enginge to generate segment IDs. These IDs cannot be generated without deploying the Valhalla system. This creates a dependency on a specific piece of software, likely reducing the value of the OSMLR spec by non-Valhalla users.
+The OSMLR 1.x implementation depends on Valhalla routing engine to generate segment IDs. These IDs cannot be generated without deploying the Valhalla system. This creates a dependency on a specific piece of software, likely reducing the value of the OSMLR spec by non-Valhalla users.
 
 SharedStreets addresses this by creating a deterministic, software-independent process for generating shorthand IDs. SharedStreets provides open source software as a reference, but the methods can be easily incorporated into other applications to independently generate matching IDs.
 
