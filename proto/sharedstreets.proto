@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+message Delimiter {
+    uint32 length = 1;
+}
+
+message UUID {
+
+  bytes value = 1;
+
+}
+
+message Point {
+
+    double lat = 1;
+    double lon = 2;
+
+}
+
+
+message GISSectionMetadata {
+
+    string sectionId = 1; // source specific id
+    string sectionProperties = 2; // source specific encoding of properties
+}
+
+message GISMetadata {
+
+    string source = 1; // describes GIS source data (e.g. "gov.nyc:lion")
+
+    repeated GISSectionMetadata sections = 2;
+}
+
+message WaySection {
+
+    uint64 wayId =1 ;
+
+    enum RoadClass {
+        Motorway = 0;
+        Trunk = 1;
+        Primary = 2;
+        Secondary = 3;
+        Tertiary = 4;
+        Residential = 5;
+        Unclassified = 6;
+        Service = 7;
+        Other = 8;
+    }
+
+    RoadClass roadClass = 2;
+
+    bool oneWay = 3;
+    bool roundabout = 4;
+    bool link = 5;
+    uint64 nodeIds = 6;
+
+}
+
+message OSMMetadata {
+
+    repeated WaySection waySections = 1;
+
+}
+
+message SharedStreetsMetadata {
+
+    UUID geometryID = 1;
+
+    OSMMetadata osmMetadata = 2;
+    repeated GISMetadata gisMetadata = 3;
+
+}
+
+message SharedStreetsGeometry {
+
+    UUID id = 1;
+
+    repeated Point points = 2;
+
+}
+
+message LocationReference {
+
+  UUID intersectionId = 1;
+
+  Point point = 2;
+
+  int32 inboundBearing = 3; // rounded to nearest degree 0-360
+  int32 outboundBearing = 4; // rounded to nearest degree 0-360
+  int32 distanceToNextRef = 5; // in centimeters -- max value of 15km
+
+}
+
+
+message SharedStreetsReference {
+
+  UUID id = 1;
+  UUID geometryId = 2;
+
+  enum FormOfWay {
+        Undefined = 0;
+        Motorway = 1;
+        MultipleCarriageway = 2;
+        SingleCarriageway = 3;
+        Roundabout = 4;
+        TrafficSquare = 5; // Like a roundabout but square? yikes: https://giphy.com/gifs/square-addis-meskel-GYb9s3Afw0cWA
+        SlipRoad = 6;
+        Other = 7;
+      }
+
+  FormOfWay formOfWay = 3;
+
+  repeated LocationReference locationReferences = 4;
+
+}
