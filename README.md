@@ -3,7 +3,7 @@
 ## Introduction
 
 
-SharedStreets data standards are a way to uniquely identify any street in world. SharedStreets makes maps connectable, and allows quick porting of data between different street representations, whether data linked to OpenStreetMap, a city-managed GIS system, or a commercial basemap.
+SharedStreets data standards are a way to uniquely identify any street in the world. SharedStreets makes maps connectable, and allows quick porting of data between different street representations, whether data linked to OpenStreetMap, a city-managed GIS system, or a commercial basemap.
 
 Cities today depend on geographic information systems (GIS) to collect and share street data, but this process requires users to agree on a map, or to use predefined, and often proprietary IDs to describe streets.
 
