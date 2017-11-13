@@ -237,7 +237,7 @@ We believe that SharedStreets will allow users to more rapidly improve OpenStree
 
 #### How does SharedStreets relate to OSMLR v1.x?
 
-OSMLR v1.x was developed to support OpenTraffic under contract from the World Bank. SharedStreets is the continuation of this work as part of the Open Transport Partnership. The SharedStreets Referencing system is effectively "OSMLR v2.0" but drops the OSMLR name as it intends to support broad range of map data formats including, but not limited to, OpenStreetMap. SharedStreets also addressed two critical deficiecies in the OSMLR v1.x spec, [documented here](https://github.com/sharedstreets/sharedstreets-ref-system/blob/master/osmlr.md).
+OSMLR v1.x was developed to support OpenTraffic under contract from the World Bank. SharedStreets is the continuation of this work as part of the Open Transport Partnership. The SharedStreets Referencing system is effectively "OSMLR v2.0" but drops the OSMLR name as it intends to support broad range of map data formats including, but not limited to, OpenStreetMap. SharedStreets also addressed two critical deficiencies in the OSMLR v1.x spec, [documented here](https://github.com/sharedstreets/sharedstreets-ref-system/blob/master/osmlr.md).
 
 
 
