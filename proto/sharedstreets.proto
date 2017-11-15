@@ -1,5 +1,9 @@
 syntax = "proto3";
 
+option java_outer_classname = "SharedStreetsProto";
+
+import "google/protobuf/wrappers.proto";
+
 message Delimiter {
     uint32 length = 1;
 }
@@ -52,7 +56,7 @@ message WaySection {
     bool oneWay = 3;
     bool roundabout = 4;
     bool link = 5;
-    uint64 nodeIds = 6;
+    repeated uint64 nodeIds = 6;
 
 }
 
@@ -85,9 +89,9 @@ message LocationReference {
 
   Point point = 2;
 
-  int32 inboundBearing = 3; // rounded to nearest degree 0-360
-  int32 outboundBearing = 4; // rounded to nearest degree 0-360
-  int32 distanceToNextRef = 5; // in centimeters -- max value of 15km
+  google.protobuf.Int32Value inboundBearing = 3; // rounded to nearest degree 0-360 -- optional field, using proto3 wrappers to allow for nulls
+  google.protobuf.Int32Value outboundBearing = 4; // rounded to nearest degree 0-360 -- optional field, using proto3 wrappers to allow for nulls
+  google.protobuf.Int32Value distanceToNextRef = 5; // in centimeters -- max value of 15km -- optional field, using proto3 wrappers to allow for nulls
 
 }
 
@@ -111,5 +115,16 @@ message SharedStreetsReference {
   FormOfWay formOfWay = 3;
 
   repeated LocationReference locationReferences = 4;
+
+}
+
+message SharedStreetsIntersection {
+
+  UUID id = 1;
+  uint64 nodeId = 2;
+  Point point = 3;
+
+  repeated UUID inboundReferenceIds = 4;
+  repeated UUID outboundReferenceIds = 5;
 
 }
