@@ -2,25 +2,9 @@ syntax = "proto3";
 
 option java_outer_classname = "SharedStreetsProto";
 
-import "google/protobuf/wrappers.proto";
-
 message Delimiter {
     uint32 length = 1;
 }
-
-message UUID {
-
-  bytes value = 1;
-
-}
-
-message Point {
-
-    double lat = 1;
-    double lon = 2;
-
-}
-
 
 message GISSectionMetadata {
 
@@ -31,7 +15,6 @@ message GISSectionMetadata {
 message GISMetadata {
 
     string source = 1; // describes GIS source data (e.g. "gov.nyc:lion")
-
     repeated GISSectionMetadata sections = 2;
 }
 
@@ -68,7 +51,7 @@ message OSMMetadata {
 
 message SharedStreetsMetadata {
 
-    UUID geometryID = 1;
+    string geometryID = 1;
 
     OSMMetadata osmMetadata = 2;
     repeated GISMetadata gisMetadata = 3;
@@ -77,29 +60,36 @@ message SharedStreetsMetadata {
 
 message SharedStreetsGeometry {
 
-    UUID id = 1;
-
-    repeated Point points = 2;
-
+    string id = 1;
+    repeated float latlons = 2; // interleaved lat/lon pairs in sequence
 }
 
 message LocationReference {
 
-  UUID intersectionId = 1;
+  string intersectionId = 1;
 
-  Point point = 2;
+  float lat = 2;
+  float lon = 3;
 
-  google.protobuf.Int32Value inboundBearing = 3; // rounded to nearest degree 0-360 -- optional field, using proto3 wrappers to allow for nulls
-  google.protobuf.Int32Value outboundBearing = 4; // rounded to nearest degree 0-360 -- optional field, using proto3 wrappers to allow for nulls
-  google.protobuf.Int32Value distanceToNextRef = 5; // in centimeters -- max value of 15km -- optional field, using proto3 wrappers to allow for nulls
+  oneof inboundBearing_present {
+   int32 inboundBearing = 4; // rounded to nearest degree 0-360 -- optional field, using proto3 wrappers to allow for nulls
+  }
+
+  oneof outboundBearing_present {
+    int32 outboundBearing = 5; // rounded to nearest degree 0-360 -- optional field, using proto3 wrappers to allow for nulls
+
+  }
+
+  oneof distanceToNextRef_present {
+    int32 distanceToNextRef = 6; // in centimeters -- max value of 15km -- optional field, using proto3 wrappers to allow for nulls
+  }
 
 }
 
-
 message SharedStreetsReference {
 
-  UUID id = 1;
-  UUID geometryId = 2;
+  string id = 1;
+  string geometryId = 2;
 
   enum FormOfWay {
         Undefined = 0;
@@ -107,7 +97,7 @@ message SharedStreetsReference {
         MultipleCarriageway = 2;
         SingleCarriageway = 3;
         Roundabout = 4;
-        TrafficSquare = 5; // Like a roundabout but square? yikes: https://giphy.com/gifs/square-addis-meskel-GYb9s3Afw0cWA
+        TrafficSquare = 5; // yikes: https://giphy.com/gifs/square-addis-meskel-GYb9s3Afw0cWA
         SlipRoad = 6;
         Other = 7;
       }
@@ -120,11 +110,12 @@ message SharedStreetsReference {
 
 message SharedStreetsIntersection {
 
-  UUID id = 1;
+  string id = 1;
   uint64 nodeId = 2;
-  Point point = 3;
+  float lat = 3;
+  float lon = 4;
 
-  repeated UUID inboundReferenceIds = 4;
-  repeated UUID outboundReferenceIds = 5;
+  repeated string inboundReferenceIds = 5;
+  repeated string outboundReferenceIds = 6;
 
 }
