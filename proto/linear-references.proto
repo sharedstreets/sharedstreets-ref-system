@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_outer_classname = "SharedStreetsLinearReferenceProto";
+
+message SharedStreetsIntersection {
+
+  string referenceId = 1; // SharedStreets Reference ID
+
+  uint64 referenceLength = 2; // total length of SharedStreets reference in centimeters (allows users to compare expected length with actual length in internal data)
+
+  uint64 startDistance = 3; // start distance along SharedStreets reference
+
+  oneof endDistance_present {
+    uint64 startDistance = 4;// end distance along SharedStreets reference, null for point linear references
+  }
+
+}
