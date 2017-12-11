@@ -69,7 +69,7 @@ The draft release of SharedStreets exports data as JSON files, cut into mercator
 
 *2017-10-20:* Initial release for comments, using JSON tile representation.
 
-*2017-11-10:* Updated spec based on external to include "inbound" and "outbound" bearings for references, backwards compatible with OpenLR-derived data standards while allowing for more complex geometry matching workflows. 
+*2017-11-10:* Updated spec based to include "inbound" and "outbound" bearings for references, backwards compatible with OpenLR-derived data standards while allowing for more complex geometry matching workflows. 
  
 *2017-11-20:* Switched from JSON to [protocol buffer encoded tiles](https://github.com/sharedstreets/sharedstreets-ref-system/blob/master/proto/sharedstreets.proto) as default output format.
 
