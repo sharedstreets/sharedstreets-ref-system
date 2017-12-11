@@ -78,8 +78,11 @@ SharedStreets encodes reference data in protocol buffer encoded map tiles. The e
 
 - ["Oneof" wrappers](https://github.com/google/protobuf/issues/1606) allow null values for optional fields. This allows for space-efficient values, while ensuring that downstream users can differentiate between zero and null values for bearings and lengths.
 
-- Strings of latitude/longitude values for geometries are encoded as a single stream of values (e.g. "[-74.003388, 40.634538],[-74.004107, 40.63406]" is  "-74.003388,40.634538,-74.004107,40.63406".
+- Strings of latitude/longitude values for geometries are encoded as a single stream of values (e.g. "[-74.003388, 40.634538],[-74.004107, 40.63406]" is encoded as "-74.003388,40.634538,-74.004107,40.63406".
 
+- Distances are encoded in centimeters using int32 field types.
+
+For more information about encoding see the [SharedStreets Builder](https://github.com/sharedstreets/sharedstreets-builder) application, which converts OpenStreetMap and other geospatial data into SharedStreets protocol buffer tiles.
 
 
 
