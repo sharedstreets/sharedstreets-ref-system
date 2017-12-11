@@ -11,7 +11,7 @@ message SharedStreetsIntersection {
   uint64 startDistance = 3; // start distance along SharedStreets reference
 
   oneof endDistance_present {
-    uint64 startDistance = 4;// end distance along SharedStreets reference, null for point linear references
+    uint64 endDistance = 4;// end distance along SharedStreets reference, null for point linear references
   }
 
 }
