@@ -65,6 +65,22 @@ The draft release of SharedStreets exports data as JSON files, cut into mercator
 
 ## DRAFT ShareStreets Data Formats
 
+### Changelog 
+
+*2017-10-20:* Initial release for comments, using JSON tile representation.
+
+*2017-11-10:* Updated spec based on external to include "inbound" and "outbound" bearings for references, backwards compatible with OpenLR-derived data standards while allowing for more complex geometry matching workflows. 
+ 
+*2017-11-20:* Switched from JSON to [protocol buffer encoded tiles](https://github.com/sharedstreets/sharedstreets-ref-system/blob/master/proto/sharedstreets.proto) as default output format.
+
+### Protocol Buffer Encoding 
+SharedStreets encodes reference data in protocol buffer encoded map tiles. The encoding format, [described here](https://github.com/sharedstreets/sharedstreets-ref-system/blob/master/proto/sharedstreets.proto), targets the Protocol Buffer v3 format, and uses the following conventions to enable efficient data storage:
+
+- ["Oneof" wrappers](https://github.com/google/protobuf/issues/1606) allow null values for optional fields. This allows for space-efficient values, while ensuring that downstream users can differentiate between zero and null values for bearings and lengths.
+
+- Strings of latitude/longitude values for geometries are encoded as a single stream of values (e.g. "[-74.003388, 40.634538],[-74.004107, 40.63406]" is  "-74.003388,40.634538,-74.004107,40.63406".
+
+
 
 
 ### SharedStreets Intersections
