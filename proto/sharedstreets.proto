@@ -18,11 +18,7 @@ message GISMetadata {
     repeated GISSectionMetadata sections = 2;
 }
 
-message WaySection {
-
-    uint64 wayId =1 ;
-
-    enum RoadClass {
+enum RoadClass {
         Motorway = 0;
         Trunk = 1;
         Primary = 2;
@@ -33,6 +29,11 @@ message WaySection {
         Service = 7;
         Other = 8;
     }
+
+message WaySection {
+
+    uint64 wayId =1 ;
+
 
     RoadClass roadClass = 2;
 
@@ -61,7 +62,15 @@ message SharedStreetsMetadata {
 message SharedStreetsGeometry {
 
     string id = 1;
-    repeated float latlons = 2; // interleaved lat/lon pairs in sequence
+
+    string fromIntersectionId = 2;
+    string toIntersectionId = 3;
+    string forwardReferenceId = 4;
+    string backReferenceId = 5;
+
+    RoadClass roadClass = 6;
+    repeated float latlons = 7; // interleaved lat/lon pairs in sequence
+
 }
 
 message LocationReference {
@@ -72,16 +81,16 @@ message LocationReference {
   float lon = 3;
 
   oneof inboundBearing_present {
-   int32 inboundBearing = 4; // rounded to nearest degree 0-360 -- optional field, using proto3 wrappers to allow for nulls
+   int32 inboundBearing = 4; // rounded to nearest degree 0-360 -- optional field, using proto3 oneof to allow for nulls
   }
 
   oneof outboundBearing_present {
-    int32 outboundBearing = 5; // rounded to nearest degree 0-360 -- optional field, using proto3 wrappers to allow for nulls
+    int32 outboundBearing = 5; // rounded to nearest degree 0-360 -- optional field, using proto3 oneof to allow for nulls
 
   }
 
   oneof distanceToNextRef_present {
-    int32 distanceToNextRef = 6; // in centimeters -- max value of 15km -- optional field, using proto3 wrappers to allow for nulls
+    int32 distanceToNextRef = 6; // in centimeters -- max value of 15km -- optional field, using proto3 oneof to allow for nulls
   }
 
 }
