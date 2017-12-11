@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option java_outer_classname = "SharedStreetsLinearReferenceProto";
 
-message SharedStreetsIntersection {
+message SharedStreetsLinearReference {
 
   string referenceId = 1; // SharedStreets Reference ID
 
