@@ -1,0 +1,3 @@
+## Sample Data 
+
+This directory contains protocol buffer SharedStreets sample data encoded with the 2017-11-20 draft of the specification and preview release [v0.1.1](https://github.com/sharedstreets/sharedstreets-builder/releases/tag/untagged-2dad20e10ef9b6e50a6d)) of the [ShareStreets Builder](https://github.com/sharedstreets/sharedstreets-builder) application. 
