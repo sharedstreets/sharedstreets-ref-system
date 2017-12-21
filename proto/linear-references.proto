@@ -1,17 +1,34 @@
 syntax = "proto3";
 
-option java_outer_classname = "SharedStreetsLinearReferenceProto";
+option java_outer_classname = "SharedStreetsLinearReferencesProto";
 
-message SharedStreetsLinearReference {
+// linear referencing spec for SharedStreets allows description of point and segments features along street references
+//
+//   [ SharedStreets Ref ]
+//   =============*=======
+//                ^ point at distance: 75 along reference
+//
+//   [ SharedStreets Ref ]
+//   ========*******======
+//           ^     ^ linear segment from distance 50 to 75 along SharedStreets reference
+
+
+message LinearReference {
+
+  uint64 startDistance = 1; // start distance along SharedStreets reference
+
+  oneof endDistance_present {
+    uint64 endDistance = 2;// end distance along SharedStreets reference, null for point linear references
+  }
+
+}
+
+message SharedStreetsLinearReferences {
 
   string referenceId = 1; // SharedStreets Reference ID
 
   uint64 referenceLength = 2; // total length of SharedStreets reference in centimeters (allows users to compare expected length with actual length in internal data)
 
-  uint64 startDistance = 3; // start distance along SharedStreets reference
-
-  oneof endDistance_present {
-    uint64 endDistance = 4;// end distance along SharedStreets reference, null for point linear references
-  }
+  repeated LinearReference references = 3; // one or more linear reference associated with a SharedStreets reference
 
 }
