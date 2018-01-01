@@ -21,12 +21,11 @@ import "temporal_references.proto";
 //   Histograms can also be stored using scaled counts (0-100 default) to hide absolute observation counts
 
 message SpeedHistogram {
-    uint32 periodOffset = 1;              // offset for period (Monday, midnight is zero for week cycle per ISO-8601)
     repeated uint32 speedBin = 2;         // repeated speed bins in km/h, bins are unordered and may not be sequential
     repeated uint32 observationCount = 3; // number of observations for corresponding speedBin. Counts are repeated in same order as bins.
 }
 
-// defines weekly speeds based on
+// defines weekly speeds based on speed histogram
 message SharedStreetsWeeklySpeeds {
 
   string referenceId = 1; // SharedStreets Reference ID
@@ -37,7 +36,8 @@ message SharedStreetsWeeklySpeeds {
 
   PeriodSize periodSize = 5;
 
-  bool scaledCounts = 6; // counts in histogram are stored as scaled numbers (0-100), otherwise stored as absolute counts
+  bool scaledCounts = 6;                        // counts in histogram are stored as scaled numbers (0-100), otherwise stored as absolute counts
 
-  repeated SpeedHistogram speedsForPeriod = 7;
+  repeated uint32 periodOffset = 7;             // repeated offset for period (Monday, midnight is zero for week cycle per ISO-8601)
+  repeated SpeedHistogram speedsForPeriod = 8;  // repeated speed histogram
 }
