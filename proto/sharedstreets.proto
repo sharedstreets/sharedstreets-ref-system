@@ -61,15 +61,15 @@ message SharedStreetsMetadata {
 
 message SharedStreetsGeometry {
 
-    string id = 1;
+    required string id = 1;
 
-    string fromIntersectionId = 2;
-    string toIntersectionId = 3;
-    string forwardReferenceId = 4;
-    string backReferenceId = 5;
+    required string fromIntersectionId = 2;
+    required string toIntersectionId = 3;
+    optional string forwardReferenceId = 4;
+    optional string backReferenceId = 5;
 
-    RoadClass roadClass = 6;
-    repeated float latlons = 7; // interleaved lat/lon pairs in sequence
+    optional RoadClass roadClass = 6;
+    repeated float latlons = 7 [ packed = true ]; // interleaved lat/lon pairs in sequence
 
 }
 
