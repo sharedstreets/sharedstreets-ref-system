@@ -63,8 +63,8 @@ message SharedStreetsGeometry {
 
     string id = 1;
 
-    string fromIntersectionId = 2;
-    string toIntersectionId = 3;
+    string startIntersectionId = 2;
+    string endIntersectionId = 3;
     string forwardReferenceId = 4;
     string backReferenceId = 5;
 
