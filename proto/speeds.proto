@@ -21,8 +21,8 @@ import "temporal_references.proto";
 //   Histograms can also be stored using scaled counts (0-100 default) to hide absolute observation counts
 
 message SpeedHistogram {
-    repeated uint32 speedBin = 2;         // repeated speed bins in km/h, bins are unordered and may not be sequential
-    repeated uint32 observationCount = 3; // number of observations for corresponding speedBin. Counts are repeated in same order as bins.
+    repeated uint32 speedBin = 1;         // repeated speed bins in km/h, bins are unordered and may not be sequential
+    repeated uint32 observationCount = 2; // number of observations for corresponding speedBin. Counts are repeated in same order as bins.
 }
 
 // defines weekly speeds based on speed histogram
