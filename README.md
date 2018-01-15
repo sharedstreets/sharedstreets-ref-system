@@ -99,8 +99,8 @@ For more information about encoding see the [SharedStreets Builder](https://gith
 	"properties": {
 		"id": "5gRJyF2MT5BBErTyEesQLC",
 		"osmNodeId": 42460951,
-		"outboundSegmentIds": ["6mjqqv7YNsp4541DmrrRbV", "jwwKcUvHuCw6GJJAT3mDQ", "2Vw2XzW4cs7r32RLhQnqwA"],
-		"inboundSegmentIds": ["VmSkhzGKoEc767w98x35La", "VXKSEokmvBJ81XHYhUronG", "B7RPzs3hb1cSXqYcAKmUhE"]
+		"outboundReferenceIds": ["6mjqqv7YNsp4541DmrrRbV", "jwwKcUvHuCw6GJJAT3mDQ", "2Vw2XzW4cs7r32RLhQnqwA"],
+		"inboundReferenceIds": ["VmSkhzGKoEc767w98x35La", "VXKSEokmvBJ81XHYhUronG", "B7RPzs3hb1cSXqYcAKmUhE"]
 	},
 	"geometry": {
 		"type": "Point",
@@ -115,8 +115,8 @@ For more information about encoding see the [SharedStreets Builder](https://gith
 	"properties": {
 		"id": "N38a21UGykpnqxwez7NGS3",
 		"osmNodeId": 42460956,
-		"outboundSegmentIds": ["VXKSEokmvBJ81XHYhUronG", "KxeV6ycjnarJU8pGEmkUx9", "V6aRcYcZgd5D58GaEaxCaF"],
-		"inboundSegmentIds": ["8ShvkUbHhu1SXzcE5XMj2L", "Ak3c8QdsYWVRn5Ap53hzcH", "2Vw2XzW4cs7r32RLhQnqwA"]
+		"outboundReferenceIds": ["VXKSEokmvBJ81XHYhUronG", "KxeV6ycjnarJU8pGEmkUx9", "V6aRcYcZgd5D58GaEaxCaF"],
+		"inboundReferenceIds": ["8ShvkUbHhu1SXzcE5XMj2L", "Ak3c8QdsYWVRn5Ap53hzcH", "2Vw2XzW4cs7r32RLhQnqwA"]
 	},
 	"geometry": {
 		"type": "Point",
@@ -199,8 +199,8 @@ SharedStreets is premised on the idea that there's no one correct geometry for a
 	"type": "Feature",
 	"properties": {
 		"id": "NxPFkg4CrzHeFhwV7Uiq7K",
-		"startIntersectionId": "5gRJyF2MT5BBErTyEesQLC",
-		"endIntersectionId": "N38a21UGykpnqxwez7NGS3",
+		"fromIntersectionId": "5gRJyF2MT5BBErTyEesQLC",
+		"toIntersectionId": "N38a21UGykpnqxwez7NGS3",
 		"forwardReferenceId": "2Vw2XzW4cs7r32RLhQnqwA",
 		"backReferenceId": "VXKSEokmvBJ81XHYhUronG",
 		"roadClass": 3
