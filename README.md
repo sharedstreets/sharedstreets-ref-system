@@ -51,7 +51,7 @@ SharedStreets is based on the idea that users will maintain their own internal b
 ### Stable, non-proprietary shorthand IDs
 SharedStreets uses 128-bit shorthand identifiers to relate data within the SharedStreets referencing system. These IDs provide a basemap-independent addressing system for street segment references, intersections and geometries. **These identifiers are generated deterministically using a hash of the underlying data.** This means that two different users with the same input data can generate matching SharedStreets identifiers. This simplifies data sharing, allowing users to match data using shorthand IDs whenever possible.
 
-In the draft specification the 128-bit IDs are encoded as base-58 strings. 
+In the draft specification the 128-bit IDs are encoded as base-16 (hex) strings. 
 
 ### Generating references + data tiles
 SharedStreets street references, intersections and geometries can be generated from OSM data using the [SharedStreets Builder](https://github.com/sharedstreets/sharedstreets-builder) application. 
@@ -72,6 +72,8 @@ The draft release of SharedStreets exports data as JSON files, cut into mercator
 *2017-11-10:* Updated spec to include "inbound" and "outbound" bearings for references, backwards compatible with OpenLR-derived data standards while allowing for more complex geometry matching workflows. (Thanks to [@migurski](https://github.com/migurski) and [@remix](https://github.com/remix) for this suggestion.) 
  
 *2017-11-20:* Switched from JSON to [protocol buffer encoded tiles](https://github.com/sharedstreets/sharedstreets-ref-system/blob/master/proto/sharedstreets.proto) as default output format.
+
+*2018-01-14:* Switched IDs to base-16 (hex) encoding. Release of updated sharedstreets-builder application (v0.1.2) and sample tile set.  
 
 ### Protocol Buffer Encoding 
 SharedStreets encodes reference data in protocol buffer encoded map tiles. The encoding format, [described here](https://github.com/sharedstreets/sharedstreets-ref-system/blob/master/proto/sharedstreets.proto), targets the Protocol Buffer v3 format, and uses the following conventions to enable efficient data storage:
@@ -256,7 +258,7 @@ We believe that SharedStreets will allow users to more rapidly improve OpenStree
 
 #### How does SharedStreets relate to OSMLR v1.x?
 
-OSMLR v1.x was developed to support OpenTraffic under contract from the World Bank. SharedStreets is the continuation of this work as part of the Open Transport Partnership. The SharedStreets Referencing system is effectively "OSMLR v2.0" but drops the OSMLR name as it intends to support broad range of map data formats including, but not limited to, OpenStreetMap. SharedStreets also addressed two critical deficiencies in the OSMLR v1.x spec, [documented here](https://github.com/sharedstreets/sharedstreets-ref-system/blob/master/osmlr.md).
+OSMLR v1.x was developed to support OpenTraffic under contract from the World Bank. SharedStreets is the continuation of this work as part of the Open Transport Partnership. The SharedStreets Referencing system is effectively "OSMLR v2.0" but drops the OSMLR name as it intends to support broad range of map data formats including, but not limited to, OpenStreetMap. SharedStreets also addresses two critical deficiencies in the OSMLR v1.x spec, [documented here](https://github.com/sharedstreets/sharedstreets-ref-system/blob/master/osmlr.md).
 
 
 
