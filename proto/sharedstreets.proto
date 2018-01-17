@@ -52,7 +52,7 @@ message OSMMetadata {
 
 message SharedStreetsMetadata {
 
-    string geometryID = 1;
+    string geometryId = 1;
 
     OSMMetadata osmMetadata = 2;
     repeated GISMetadata gisMetadata = 3;
