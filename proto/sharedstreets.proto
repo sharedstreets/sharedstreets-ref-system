@@ -69,7 +69,7 @@ message SharedStreetsGeometry {
     string backReferenceId = 5;
 
     RoadClass roadClass = 6;
-    repeated float latlons = 7; // interleaved lat/lon pairs in sequence
+    repeated double lonlats = 7; // interleaved lon/lat pairs in sequence
 
 }
 
@@ -77,8 +77,8 @@ message LocationReference {
 
   string intersectionId = 1;
 
-  float lat = 2;
-  float lon = 3;
+  double lon = 2;
+  double lat = 3;
 
   oneof inboundBearing_present {
    int32 inboundBearing = 4; // rounded to nearest degree 0-360 -- optional field, using proto3 oneof to allow for nulls
@@ -121,9 +121,9 @@ message SharedStreetsIntersection {
 
   string id = 1;
   uint64 nodeId = 2;
-  float lat = 3;
-  float lon = 4;
-
+  double lon = 3;
+  double lat = 4;
+  
   repeated string inboundReferenceIds = 5;
   repeated string outboundReferenceIds = 6;
 
