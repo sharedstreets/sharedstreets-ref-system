@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option java_outer_classname = "SharedStreetsLinearReferencesProto";
+
+// linear referencing spec for SharedStreets allows description of point and segments features along street references
+//
+//   [ SharedStreets Ref ]
+//   =============*=======
+//                ^ point at distance: 75 along reference
+//
+//   [ SharedStreets Ref ]
+//   ========*******======
+//           ^     ^ linear segment from distance 50 to 75 along SharedStreets reference
+
+
+message LinearReference {
+
+  uint64 startDistance = 1; // start distance along SharedStreets reference
+
+  oneof endDistance_present {
+    uint64 endDistance = 2;// end distance along SharedStreets reference, null for point linear references
+  }
+
+}
+
+// 
+message SharedStreetsLinearReferences {
+
+  string referenceId = 1; // SharedStreets Reference ID
+
+  uint64 referenceLength = 2; // total length of SharedStreets reference in centimeters (allows users to compare expected length with actual length in internal data)
+
+  repeated LinearReference references = 3; // one or more linear reference associated with a SharedStreets reference
+
+}
+
+// "binned" linear referencing spec for SharedStreets allows grouping of linear point features into segments along reference
+//
+//   [ SharedStreets Ref ]
+//   referenceLength = 100m
+//   numberOfBins = 5
+//   ====*====*====*====*====
+//     0    1    2    3    4   = bin position (20m/bin)
+//     4    8    0    2    0   = bin value (count of grouped linear features)
+//
+
+message SharedStreetsBinnedLinearReferences {
+
+  string referenceId = 1;           // SharedStreets Reference ID
+
+  uint64 referenceLength = 2;       // total length of SharedStreets reference in centimeters (allows users to compare expected length with actual length in internal data)
+  uint32 numberOfBins = 3;          // number of bins, bin size is referenceLength / numberOfBins
+
+  repeated uint32 binPosition = 4;  // bin position offset (0-n bins)
+  repeated double binValue = 5;     // bin value ()
+
+}

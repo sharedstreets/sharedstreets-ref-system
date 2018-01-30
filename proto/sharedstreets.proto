@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+option java_outer_classname = "SharedStreetsProto";
+
+message Delimiter {
+    uint32 length = 1;
+}
+
+message GISSectionMetadata {
+
+    string sectionId = 1; // source specific id
+    string sectionProperties = 2; // source specific encoding of properties
+}
+
+message GISMetadata {
+
+    string source = 1; // describes GIS source data (e.g. "gov.nyc:lion")
+    repeated GISSectionMetadata sections = 2;
+}
+
+enum RoadClass {
+        Motorway = 0;
+        Trunk = 1;
+        Primary = 2;
+        Secondary = 3;
+        Tertiary = 4;
+        Residential = 5;
+        Unclassified = 6;
+        Service = 7;
+        Other = 8;
+    }
+
+message WaySection {
+
+    uint64 wayId =1 ;
+
+
+    RoadClass roadClass = 2;
+
+    bool oneWay = 3;
+    bool roundabout = 4;
+    bool link = 5;
+    repeated uint64 nodeIds = 6;
+
+}
+
+message OSMMetadata {
+
+    repeated WaySection waySections = 1;
+
+}
+
+message SharedStreetsMetadata {
+
+    string geometryID = 1;
+
+    OSMMetadata osmMetadata = 2;
+    repeated GISMetadata gisMetadata = 3;
+
+}
+
+message SharedStreetsGeometry {
+
+    string id = 1;
+
+    string fromIntersectionId = 2;
+    string toIntersectionId = 3;
+    string forwardReferenceId = 4;
+    string backReferenceId = 5;
+
+    RoadClass roadClass = 6;
+    repeated double lonlats = 7; // interleaved lon/lat pairs in sequence
+
+}
+
+message LocationReference {
+
+  string intersectionId = 1;
+
+  double lon = 2;
+  double lat = 3;
+
+  oneof inboundBearing_present {
+   int32 inboundBearing = 4; // rounded to nearest degree 0-360 -- optional field, using proto3 oneof to allow for nulls
+  }
+
+  oneof outboundBearing_present {
+    int32 outboundBearing = 5; // rounded to nearest degree 0-360 -- optional field, using proto3 oneof to allow for nulls
+
+  }
+
+  oneof distanceToNextRef_present {
+    int32 distanceToNextRef = 6; // in centimeters -- max value of 15km -- optional field, using proto3 oneof to allow for nulls
+  }
+
+}
+
+message SharedStreetsReference {
+
+  string id = 1;
+  string geometryId = 2;
+
+  enum FormOfWay {
+        Undefined = 0;
+        Motorway = 1;
+        MultipleCarriageway = 2;
+        SingleCarriageway = 3;
+        Roundabout = 4;
+        TrafficSquare = 5; // yikes: https://giphy.com/gifs/square-addis-meskel-GYb9s3Afw0cWA
+        SlipRoad = 6;
+        Other = 7;
+      }
+
+  FormOfWay formOfWay = 3;
+
+  repeated LocationReference locationReferences = 4;
+
+}
+
+message SharedStreetsIntersection {
+
+  string id = 1;
+  uint64 nodeId = 2;
+  double lon = 3;
+  double lat = 4;
+  
+  repeated string inboundReferenceIds = 5;
+  repeated string outboundReferenceIds = 6;
+
+}

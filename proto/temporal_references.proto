@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option java_outer_classname = "SharedStreetsTemporalReferencesProto";
+
+enum PeriodSize {
+    OneSecond = 0;
+    FiveSeconds = 1;
+    TenSeconds = 2;
+    FifteenSeconds = 3;
+    ThirtySeconds = 4;
+    OneMinute = 5;
+    FiveMinutes = 6;
+    TenMinutes = 7;
+    FifteenMinutes = 8;
+    ThirtyMinutes = 9;
+    OneHour = 10;
+    OneDay = 11;
+    OneWeek = 12;
+    OneMonth = 13;
+    OneYear = 14;
+}
+
+// temporal references for SharedStreets events (in UTC)
+
+message TemporalPeriod {
+
+  PeriodSize periodSize = 1;
+  uint64 periodOffset = 2; // period offset from unix epoch
+                           // For periodSize = oneYear:
+                           //   1970-01-01 = 0
+                           //   2015-01-01 = 45
+                           // For periodSize = OneMonth:
+                           //   1970-01-01 = 0
+                           //   2015-01-01 = 540
+                           // For periodSize = OneSecond: periodOffset = UNIX timestamp
+
+}
+
+// template for storing weekly cycles of events in local time -- used as a template for developing application specific data standards
+// assumes Monday-Sunday week in local time. See OpenTraffic weekly speed data for example implementation.
+message WeeklyCycle {
+
+  uint32 year = 1;     // date for Monday of week (Monday midnight is zero for week cycle per ISO-8601)
+  uint32 month = 2;
+  uint32 day = 3;
+
+  PeriodSize periodSize = 4;
+
+  // repeated [...] periodData = ...; // replace with application specific data payload
+
+
+}
