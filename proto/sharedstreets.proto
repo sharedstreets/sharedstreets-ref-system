@@ -102,7 +102,7 @@ message SharedStreetsReference {
 
 message SharedStreetsIntersection {
   string id = 1;
-  uint64 nodeId = 2;
+  string nodeId = 2;
   double lon = 3;
   double lat = 4;
 
