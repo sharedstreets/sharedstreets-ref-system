@@ -37,6 +37,7 @@ message WaySection {
   bool roundabout = 4;
   bool link = 5;
   repeated uint64 nodeIds = 6;
+  string name  = 7;
 }
 
 message OSMMetadata {
@@ -48,6 +49,8 @@ message SharedStreetsMetadata {
 
   OSMMetadata osmMetadata = 2;
   repeated GISMetadata gisMetadata = 3;
+  
+  string name  = 7; // optional value + requires resolution of conflicts between different way segment names and data sources.
 }
 
 message SharedStreetsGeometry {
