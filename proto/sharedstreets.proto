@@ -37,10 +37,13 @@ message WaySection {
   bool roundabout = 4;
   bool link = 5;
   repeated uint64 nodeIds = 6;
+  
+  string name  = 7; // name only stored here if different for each way section, otherwise captured in OSMMetadata
 }
 
 message OSMMetadata {
   repeated WaySection waySections = 1;
+  string name  = 2; // name stored here if same for all way sections
 }
 
 message SharedStreetsMetadata {
