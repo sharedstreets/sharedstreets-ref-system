@@ -12,7 +12,7 @@ SharedStreets provides a global, non-proprietary system for describing streets, 
 
 ![GIS vs SharedStreets data exchange](img/gis_vs_sharedstreets.png)
 
-The SharedStreets referencing system was originally created as part of the [OpenTraffc project](https://github.com/opentraffic/architecture/issues/1), as a mechanism for sharing dynamic traffic information. SharedStreets builds on the core concepts from [OpenLR](http://www.openlr.info/) and provides a collection of data formats and open source tools to re-imagine collaboration and sharing of street-linked data.
+The SharedStreets referencing system was originally created as part of the [OpenTraffic project](https://github.com/opentraffic/architecture/issues/1), as a mechanism for sharing dynamic traffic information. SharedStreets builds on the core concepts from [OpenLR](http://www.openlr.info/) and provides a collection of data formats and open source tools to re-imagine collaboration and sharing of street-linked data.
 
 The SharedStreets referencing system is being released as a draft proposal, along with data samples and tools for generating references from OpenStreetMap and Shapefile data sources. Comments and suggestions on the format will be managed via this Github repository. Please open an Github issue or pull request to contribute.
 
