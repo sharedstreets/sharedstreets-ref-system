@@ -72,19 +72,38 @@ message SpeedHistogram {
     repeated uint32 observationCount = 2; // number of observations for corresponding speedBin. Counts are repeated in same order as bins.
 }
 
-// defines weekly speeds based on speed histogram
+message SpeedHistogramByPeriod {
+    repeated uint32 periodOffset = 1;      // repeated offset for period (Monday, midnight is zero for week cycle per ISO-8601)
+    repeated SpeedHistogram histogram = 2; // SpeedHistogram for period
+}
+
+message SpeedSummary{
+    uint32 meanSpead = 1;                  // mean speed in km/h
+
+    repeated uint32 percentile = 2;        // repeated percentile value (e.g 50th, 85th stored as 50 or 85)
+    repeated uint32 observationCount = 3;  // km/h value for corresponding percentile
+}
+
+message SpeedSummaryByPeriod{
+    repeated uint32 periodOffset = 1;        // repeated offset for period (Monday, midnight is zero for week cycle per ISO-8601)
+    repeated SpeedSummary speedSummary = 3;  // SpeedSummary for period
+}
+
+
+// defines weekly speeds based on speed histogram and/or summary + linear binning following approach used in SharedStreetsBinnedLinearReferences
 message SharedStreetsWeeklySpeeds {
 
-  string referenceId = 1; // SharedStreets Reference ID
+  string referenceId = 1;                       // SharedStreets Reference ID
+  
+  PeriodSize periodSize = 2;                    // optional (hourly if ommited)
 
-  uint32 year = 2;     // date for Monday of week
-  uint32 month = 3;
-  uint32 day = 4;
+  bool scaledCounts = 3;                        // counts in histogram are stored as scaled numbers, otherwise stored as absolute counts
+  
+  uint64 referenceLength = 4;                   // total length of SharedStreets reference in centimeters (allows users to compare expected length with actual length in internal data)
+  uint32 numberOfBins = 5;                      // number of linear bins. bin size is referenceLength / numberOfBins
 
-  PeriodSize periodSize = 5;
-
-  bool scaledCounts = 6;                        // counts in histogram are stored as scaled numbers (0-100), otherwise stored as absolute counts
-
-  repeated uint32 periodOffset = 7;             // repeated offset for period (Monday, midnight is zero for week cycle per ISO-8601)
-  repeated SpeedHistogram speedsForPeriod = 8;  // repeated speed histogram
+  repeated uint32 binPosition = 6;                             // linear bin position offset (0 to n-1 bins)
+  repeated SpeedHistogramByPeriod   speedsByPeriod = 7;        // repeated speed histogram
+  repeated SpeedSummaryByPeriod     speedSummaryByPeriod = 8;  // repeated speed summary
 }
+
