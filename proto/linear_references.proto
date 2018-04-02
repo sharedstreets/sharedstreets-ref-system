@@ -2,6 +2,7 @@ syntax = "proto3";
 
 option java_outer_classname = "SharedStreetsLinearReferencesProto";
 
+
 // linear referencing spec for SharedStreets allows description of point and segments features along street references
 //
 //   [ SharedStreets Ref ]
@@ -23,7 +24,6 @@ message LinearReference {
 
 }
 
-// 
 message SharedStreetsLinearReferences {
 
   string referenceId = 1; // SharedStreets Reference ID
@@ -39,19 +39,64 @@ message SharedStreetsLinearReferences {
 //   [ SharedStreets Ref ]
 //   referenceLength = 100m
 //   numberOfBins = 5
-//   ====*====*====*====*====
-//     0    1    2    3    4   = bin position (20m/bin)
-//     4    8    0    2    0   = bin value (count of grouped linear features)
+//   =====*=====*=====*=====*=====
+//     0     1     2     3     4   = bin position (20m/bin)
+//     4     8     0     2     0   = bin value (count of grouped linear features)
 //
+
+message DataBin {
+  repeated string dataType = 1;
+  repeated uint64 count = 2;
+  repeated double value = 3;
+}
+
+message BinnedPeriodicData {
+  repeated uint32 periodOffset  = 1; 
+  repeated DataBin bins = 2;
+}
 
 message SharedStreetsBinnedLinearReferences {
 
+  string referenceId = 1;            // SharedStreets Reference ID
+  bool scaledCounts = 2;             // counts in histogram are stored as scaled numbers, otherwise stored as absolute counts
+  
+  uint64 referenceLength = 3;        // total length of SharedStreets reference in centimeters (allows users to compare expected length with actual length in internal data)
+  uint32 numberOfBins = 4;           // number of bins, bin size is referenceLength / numberOfBins
+                                   
+  repeated uint32  binPosition = 5;  // bin position offset (0 to n-1 bins)
+  repeated DataBin bins = 6;         // bin value ()
+
+}
+
+enum PeriodSize {
+    OneSecond = 0;
+    FiveSeconds = 1;
+    TenSeconds = 2;
+    FifteenSeconds = 3;
+    ThirtySeconds = 4;
+    OneMinute = 5;
+    FiveMinutes = 6;
+    TenMinutes = 7;
+    FifteenMinutes = 8;
+    ThirtyMinutes = 9;
+    OneHour = 10;
+    OneDay = 11;
+    OneWeek = 12;
+    OneMonth = 13;
+    OneYear = 14;
+}
+
+message SharedStreetsWeeklyBinnedLinearReferences {
+
   string referenceId = 1;           // SharedStreets Reference ID
+  PeriodSize periodSize = 2;        // optional (hourly if ommited)
 
-  uint64 referenceLength = 2;       // total length of SharedStreets reference in centimeters (allows users to compare expected length with actual length in internal data)
-  uint32 numberOfBins = 3;          // number of bins, bin size is referenceLength / numberOfBins
-
-  repeated uint32 binPosition = 4;  // bin position offset (0-n bins)
-  repeated double binValue = 5;     // bin value ()
+  bool scaledCounts = 3;            // counts in histogram are stored as scaled numbers, otherwise stored as absolute counts
+  
+  uint64 referenceLength = 4;       // total length of SharedStreets reference in centimeters (allows users to compare expected length with actual length in internal data)
+  uint32 numberOfBins = 5;          // number of bins, bin size is referenceLength / numberOfBins
+                                    
+  repeated uint32   binPosition = 6;                   // period
+  repeated BinnedPeriodicData binnedPeriodicData = 7;  // bin value ()
 
 }
