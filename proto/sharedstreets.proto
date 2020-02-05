@@ -28,6 +28,11 @@ enum RoadClass {
   Other = 8;
 }
 
+message OsmTag {
+  string key  = 1;
+  string value  = 2;
+}
+
 message WaySection {
   uint64 wayId =1 ;
 
@@ -39,6 +44,8 @@ message WaySection {
   repeated uint64 nodeIds = 6;
   
   string name  = 7; // name only stored here if different for each way section, otherwise captured in OSMMetadata
+
+  repeated OsmTag tags = 8; // osm  tags
 }
 
 message OSMMetadata {
