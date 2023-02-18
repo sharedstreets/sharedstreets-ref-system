@@ -31,7 +31,7 @@ The SharedStreets referencing system is being released as a draft proposal, alon
 The SharedStreets Referencing system is built on four layers of data:
 
 1. **SharedStreets References:** basemap-independent references for intersection to intersection street segments
-2. **SharedStreets Intersection:** nodes connecting street street segments references
+2. **SharedStreets Intersection:** nodes connecting street segments references
 3. **SharedStreets Geometries:** geometries used to generate street segment references
 4. **OSM Metadata:** underlying OSM way and node references used to construct SharedStreets data
 
