@@ -124,9 +124,9 @@ For more information about encoding see the [SharedStreets Builder](https://gith
 
 ![GIS vs SharedStreets data exchange](img/sharedstreets_references.png)
 
-SharedStreets References (SSR) are directional edges in a road network. Two-way streets have two SSRs, one for each direction of travel, while one-way streets only have one SSR. In the draft specification these are labeled "forward references" and "back references," with the forward reference following the direction of the map geometry used to generate the references.
+SharedStreets References (SSR) are directional edges in a road network. Two-way streets have two SSRs, one for each direction of travel, while one-way streets only have one SSR. In the draft specification these are labeled "forward references" and "back references", with the forward reference following the direction of the map geometry used to generate the references.
 
-Each SharedStreets Reference consists of two or more location references (LRs) that describe the latitude and longitude of the beginning or end of a street segment. SSRs also describe type of road (or the "form of way," as defined by OpenLR), and length of the geometry connecting location reference points. In combination these attributes uniquely describe any road segment, and can be used to look up corresponding streets in users’ internal maps.
+Each SharedStreets Reference consists of two or more location references (LRs) that describe the latitude and longitude of the beginning or end of a street segment. SSRs also describe type of road (or the "form of way", as defined by OpenLR), and length of the geometry connecting location reference points. In combination these attributes uniquely describe any road segment, and can be used to look up corresponding streets in users’ internal maps.
 
 #### Forward Reference
 
